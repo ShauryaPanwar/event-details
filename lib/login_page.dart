@@ -3,10 +3,9 @@ import 'package:event_details/utils/spaces.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:another_flushbar/flushbar_route.dart';
-import 'package:event_details/utils/logintextfieldstyle.dart';
 import 'package:event_details/widgets/logintextfield.dart';
 import 'package:provider/provider.dart';
-
+import 'package:event_details/service/auth_services.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -18,11 +17,11 @@ class LoginPage extends StatelessWidget {
     //   print("Logged in !!");
     //   print(usernamecontroller.text);
     //   print(passwordcontroller.text);
+    //   await context.read<Auth>().loginuser(usernamecontroller.text);
+    //
+    //
     // }
-    print("Logged in !!");
-    print(usernamecontroller.text);
-    print(passwordcontroller.text);
-    
+
 
     if (usernamecontroller.text == 'fake-user' &&
         passwordcontroller.text == 'fake-pass'){
@@ -101,7 +100,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Loginwidget(
                       // validator: (value) {
-                      //   if (value != null && value.isNotEmpty) {
+                      //   if (value != null && value.isNotEmpty && value!="fake-user") {
                       //     return "Invalid Username Input";
                       //   } else if (value != null && value.isEmpty) {
                       //     return "Please type your Username";
@@ -113,7 +112,7 @@ class LoginPage extends StatelessWidget {
                     verticalspacing(12),
                     Loginwidget(
                       // validator: (value) {
-                      //   if (value != null && value.isNotEmpty) {
+                      //   if (value != null && value.isNotEmpty && value!="fake-pass") {
                       //     return "Invalid Password Input";
                       //   } else if (value != null && value.isEmpty) {
                       //     return "Please type your Password";

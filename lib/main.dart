@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.deepPurple
-        )
+        ),
+
       ),
       home: LoginPage(),
       routes: {
