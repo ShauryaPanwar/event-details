@@ -1,10 +1,32 @@
+
+import 'dart:io';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:event_details/utils/spaces.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool isFile=false;
+  XFile? fileimage;
+  final ImagePicker imagePicker = ImagePicker();
+
+
+
+  getImageFromGallery() async {
+    fileimage =  await imagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      fileimage;
+    });
+  }
 
 
   @override
@@ -34,7 +56,7 @@ class HomePage extends StatelessWidget {
           IconButton(onPressed: (){}, icon: Icon(isdark? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
         ],
       ),
-      
+
 
       body: SingleChildScrollView(
         child: Container(
@@ -43,20 +65,22 @@ class HomePage extends StatelessWidget {
             children: [
               verticalspacing(11),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   //take image from gallery
+                  getImageFromGallery();
+
+
                 },
                 child: Center(
                   child: CircleAvatar(
 
                     radius: MediaQuery.of(context).size.width*0.20,
                     backgroundColor: Colors.white38,
-                    child:
-
-                    Icon(
+                    backgroundImage: fileimage == null ? null :FileImage(File(fileimage!.path)),
+                    child: fileimage == null ?  Icon(
                       Icons.add_photo_alternate,
                       size: MediaQuery.of(context).size.width * 0.20,
-                    ),
+                    ) : null,
 
                   ),
                 ),
