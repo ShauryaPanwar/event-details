@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Colors.transparent,
         primarySwatch: Colors.deepPurple,
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.deepPurple
+          backgroundColor: Colors.white
         ),
 
       ),
@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/homepage':(context)=> HomePage(),
       },
+
+      debugShowCheckedModeBanner: false,
     );
   }
 }

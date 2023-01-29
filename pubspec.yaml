@@ -33,6 +33,8 @@ dependencies:
   provider: ^6.0.5
   another_flushbar: ^1.12.29
   shared_preferences: ^2.0.17
+  line_awesome_flutter: ^2.0.0
+  image_picker: ^0.8.6+1
   flutter:
     sdk: flutter
 
