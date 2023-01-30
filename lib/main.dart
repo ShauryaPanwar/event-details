@@ -1,3 +1,4 @@
+import 'package:event_details/detail.dart';
 import 'package:event_details/homepage.dart';
 import 'package:event_details/login_page.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
       home: LoginPage(),
       routes: {
         '/homepage':(context)=> HomePage(),
+        '/detail':(context)=> detail(),
+
       },
 
       debugShowCheckedModeBanner: false,

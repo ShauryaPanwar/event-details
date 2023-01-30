@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:async/async.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
@@ -35,21 +36,13 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-
-
-
-
-
-
   TextEditingController _date = TextEditingController();
   TextEditingController _adhar = TextEditingController();
   TextEditingController _pan = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _add1 = TextEditingController();
   TextEditingController _add2 = TextEditingController();
-
-
-
+  TextEditingController _aoi = TextEditingController();
 
 
   @override
@@ -133,14 +126,14 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.all(10),
                     child: Form(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           TextFormField(
                             decoration: InputDecoration(
                               label: Text("Email"),
                               hintText: "Something@email.com",
                               prefixIcon: Icon(Icons.email_outlined,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                             ),
 
                             controller: _email,
@@ -151,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: InputDecoration(
                               label: Text("Address Line 1"),
                               prefixIcon: Icon(Icons.location_city,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                             ),
                           ),
                           verticalspacing(20),
@@ -160,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: InputDecoration(
                               label: Text("Address Line 2"),
                               prefixIcon: Icon(Icons.location_city_outlined,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                             ),
                           ),
                           verticalspacing(20),
@@ -171,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                               label: Text("Select Date of Birth"),
                               prefixIcon: Icon(
                                 Icons.person_add_alt_1_outlined,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
 
                             ),
 
@@ -191,14 +184,17 @@ class _HomePageState extends State<HomePage> {
                           ),
                           verticalspacing(20),
                           TextFormField(
+
                             controller: _adhar,
                             keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            inputFormatters: [FilteringTextInputFormatter
+                                .digitsOnly
+                            ],
                             decoration: InputDecoration(
-                              hintText: "0000 0000 0000 0000",
+                              hintText: "0000 0000 0000",
                               label: Text("Adhaar Number"),
                               prefixIcon: Icon(Icons.credit_card,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                             ),
                             maxLength: 12,
                           ),
@@ -206,26 +202,47 @@ class _HomePageState extends State<HomePage> {
                             keyboardType: TextInputType.text,
                             textCapitalization: TextCapitalization.characters,
                             controller: _pan,
-                            inputFormatters: <TextInputFormatter>[ UpperCaseTextFormatter()],
+                            inputFormatters: <TextInputFormatter>[
+                              UpperCaseTextFormatter()
+                            ],
                             decoration: InputDecoration(
                               label: Text("Pan Number"),
                               prefixIcon: Icon(Icons.card_membership_outlined,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                             ),
                             maxLength: 10,
                           ),
                           TextFormField(
                             keyboardType: TextInputType.text,
-                            controller: _pan,
+                            controller: _aoi,
                             decoration: InputDecoration(
                               label: Text("Area of Intrest"),
                               prefixIcon: Icon(Icons.interests_rounded,),
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                             ),
-                            onTap: (){
+                            onTap: () async {
+
                             },
                           ),
+                          verticalspacing(20),
+                          Center(
+                            child:ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.deepPurple,
+                                onPrimary: Colors.white,
+                                shadowColor: Colors.greenAccent,
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32.0)),
+                                minimumSize: Size(MediaQuery.of(context).size.width*0.8, 40), //////// HERE
+                              ),
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(context, '/detail');
 
+                              },
+                              child: Text('Submit'),
+                            )
+                          )
                         ],
                       ),
                     ),
@@ -234,7 +251,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           )
-
       ),
     );
   }
