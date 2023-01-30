@@ -2,12 +2,15 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:event_details/utils/spaces.dart';
 import 'package:numberpicker/numberpicker.dart';
+
+import 'formatter/uppercase.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -31,8 +34,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+
+
+
+
+
+
   TextEditingController _date = TextEditingController();
   TextEditingController _adhar = TextEditingController();
+  TextEditingController _pan = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _add1 = TextEditingController();
+  TextEditingController _add2 = TextEditingController();
+
+
+
 
 
   @override
@@ -121,31 +138,34 @@ class _HomePageState extends State<HomePage> {
                           TextFormField(
                             decoration: InputDecoration(
                               label: Text("Email"),
+                              hintText: "Something@email.com",
                               prefixIcon: Icon(Icons.email_outlined,),
                               border: OutlineInputBorder(),
                             ),
-                          ),
 
-                          verticalspacing(12),
+                            controller: _email,
+                          ),
+                          verticalspacing(20),
                           TextFormField(
+                            controller: _add1,
                             decoration: InputDecoration(
                               label: Text("Address Line 1"),
                               prefixIcon: Icon(Icons.location_city,),
                               border: OutlineInputBorder(),
                             ),
                           ),
-                          verticalspacing(12),
+                          verticalspacing(20),
                           TextFormField(
+                            controller: _add2,
                             decoration: InputDecoration(
                               label: Text("Address Line 2"),
                               prefixIcon: Icon(Icons.location_city_outlined,),
                               border: OutlineInputBorder(),
                             ),
                           ),
-                          verticalspacing(12),
+                          verticalspacing(20),
                           TextFormField(
                             keyboardType: TextInputType.none,
-
                             controller: _date,
                             decoration: InputDecoration(
                               label: Text("Select Date of Birth"),
@@ -169,17 +189,41 @@ class _HomePageState extends State<HomePage> {
                               }
                             },
                           ),
-                          verticalspacing(12),
+                          verticalspacing(20),
                           TextFormField(
                             controller: _adhar,
                             keyboardType: TextInputType.number,
                             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
+                              hintText: "0000 0000 0000 0000",
                               label: Text("Adhaar Number"),
                               prefixIcon: Icon(Icons.credit_card,),
                               border: OutlineInputBorder(),
                             ),
-                            maxLength: 1245445445,
+                            maxLength: 12,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.characters,
+                            controller: _pan,
+                            inputFormatters: <TextInputFormatter>[ UpperCaseTextFormatter()],
+                            decoration: InputDecoration(
+                              label: Text("Pan Number"),
+                              prefixIcon: Icon(Icons.card_membership_outlined,),
+                              border: OutlineInputBorder(),
+                            ),
+                            maxLength: 10,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller: _pan,
+                            decoration: InputDecoration(
+                              label: Text("Area of Intrest"),
+                              prefixIcon: Icon(Icons.interests_rounded,),
+                              border: OutlineInputBorder(),
+                            ),
+                            onTap: (){
+                            },
                           ),
 
                         ],
