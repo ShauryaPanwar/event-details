@@ -45,6 +45,18 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _aoi = TextEditingController();
 
 
+  final items=[
+  'Event Manager',
+  "Event Scheduling",
+  "Product Manager",
+  "Data Analyst",
+  "Web Developer",
+  "Flutter Developer",
+  ];
+
+  int index =0;
+
+
   @override
   Widget build(BuildContext context) {
     var isdark = MediaQuery
@@ -133,7 +145,8 @@ class _HomePageState extends State<HomePage> {
                               label: Text("Email"),
                               hintText: "Something@email.com",
                               prefixIcon: Icon(Icons.email_outlined,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
                             ),
 
                             controller: _email,
@@ -144,7 +157,8 @@ class _HomePageState extends State<HomePage> {
                             decoration: InputDecoration(
                               label: Text("Address Line 1"),
                               prefixIcon: Icon(Icons.location_city,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
                             ),
                           ),
                           verticalspacing(20),
@@ -153,7 +167,8 @@ class _HomePageState extends State<HomePage> {
                             decoration: InputDecoration(
                               label: Text("Address Line 2"),
                               prefixIcon: Icon(Icons.location_city_outlined,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
                             ),
                           ),
                           verticalspacing(20),
@@ -164,7 +179,8 @@ class _HomePageState extends State<HomePage> {
                               label: Text("Select Date of Birth"),
                               prefixIcon: Icon(
                                 Icons.person_add_alt_1_outlined,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
 
                             ),
 
@@ -184,17 +200,17 @@ class _HomePageState extends State<HomePage> {
                           ),
                           verticalspacing(20),
                           TextFormField(
-
                             controller: _adhar,
                             keyboardType: TextInputType.number,
                             inputFormatters: [FilteringTextInputFormatter
                                 .digitsOnly
                             ],
                             decoration: InputDecoration(
-                              hintText: "0000 0000 0000",
+                              hintText: "0000-0000-0000",
                               label: Text("Adhaar Number"),
                               prefixIcon: Icon(Icons.credit_card,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
                             ),
                             maxLength: 12,
                           ),
@@ -208,40 +224,75 @@ class _HomePageState extends State<HomePage> {
                             decoration: InputDecoration(
                               label: Text("Pan Number"),
                               prefixIcon: Icon(Icons.card_membership_outlined,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
                             ),
                             maxLength: 10,
                           ),
                           TextFormField(
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.none,
                             controller: _aoi,
                             decoration: InputDecoration(
                               label: Text("Area of Intrest"),
                               prefixIcon: Icon(Icons.interests_rounded,),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
                             ),
                             onTap: () async {
+                              FocusScope.of(context).requestFocus(
+                                  new FocusNode());
+                              showCupertinoModalPopup(
+                                  context: context, builder: (context){
+                                    return Container(
+                                      height: 200,
+                                      color: Colors.white,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                              child: CupertinoPicker(
+                                                itemExtent: 90,
+                                                onSelectedItemChanged: (index){
+                                                  setState(() {
+                                                    this.index = index;
+                                                    _aoi.text=items[index];
+                                                  });
+                                                },
+                                                children: items.map((item) =>
+                                                    Center(child: Text(item,
+                                                    style: TextStyle(fontSize: 30),),)
+                                                ).toList(),
+                                              )
+                                          )
+                                        ],
+                                      ),
+                                    );
 
+                              });
                             },
                           ),
                           verticalspacing(20),
                           Center(
-                            child:ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.deepPurple,
-                                onPrimary: Colors.white,
-                                shadowColor: Colors.greenAccent,
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(32.0)),
-                                minimumSize: Size(MediaQuery.of(context).size.width*0.8, 40), //////// HERE
-                              ),
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(context, '/detail');
-
-                              },
-                              child: Text('Submit'),
-                            )
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.deepPurple,
+                                  onPrimary: Colors.white,
+                                  shadowColor: Colors.greenAccent,
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          32.0)),
+                                  minimumSize: Size(MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.8, 40), //////// HERE
+                                ),
+                                onPressed: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/detail');
+                                },
+                                child: Text('Submit'),
+                              )
                           )
                         ],
                       ),
