@@ -10,7 +10,9 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:event_details/utils/spaces.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'formatter/uppercase.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 
 class HomePage extends StatefulWidget {
@@ -61,11 +63,32 @@ class _HomePageState extends State<HomePage> {
   void validate(){
     if(formkey.currentState!.validate()){
       print("ok");
-      Navigator.pushReplacementNamed(context, '/detail');
+      _qrscanner();
+      // Navigator.pushReplacementNamed(context, '/detail');
     }
     else{
       print('error');
     }
+  }
+
+  Future _qrscanner() async {
+    var camerastatus = await Permission.camera.status;
+    if(camerastatus.isGranted){
+      String? qrdata = await scanner.scan();
+      // String? qrdataphone = await scanner.scanPhoto();
+      print(qrdata);
+      // print(qrdataphone);
+    }
+    else{
+      var isgrant = await Permission.camera.request();
+      if(isgrant.isGranted){
+        String? qrdata = await scanner.scan();
+        // String? qrdataphone = await scanner.scanPhoto();
+        print(qrdata);
+        // print(qrdataphone);
+      }
+    }
+
   }
 
   @override
