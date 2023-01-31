@@ -10,13 +10,11 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:event_details/utils/spaces.dart';
 import 'package:numberpicker/numberpicker.dart';
-
 import 'formatter/uppercase.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  const HomePage({Key? key,}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isFile = false;
+
   XFile? fileimage;
   final ImagePicker imagePicker = ImagePicker();
 
@@ -57,8 +56,21 @@ class _HomePageState extends State<HomePage> {
   int index =0;
 
 
+  GlobalKey<FormState> formkey =GlobalKey<FormState>();
+
+  void validate(){
+    if(formkey.currentState!.validate()){
+      print("ok");
+      Navigator.pushReplacementNamed(context, '/detail');
+    }
+    else{
+      print('error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     var isdark = MediaQuery
         .of(context)
         .platformBrightness == Brightness.dark;
@@ -122,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   verticalspacing(11),
-                  Text('fake-user',
+                  Text("fake-user",
                       style: GoogleFonts.sacramento(
                           textStyle: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 30))),
@@ -137,6 +149,8 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Form(
+                      // autovalidateMode:AutovalidateMode.always,
+                      key: formkey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -148,6 +162,15 @@ class _HomePageState extends State<HomePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20)),
                             ),
+                            validator: (val){
+                              if(val!.isEmpty){
+                                return "Required";
+                              }
+                              else{
+                                return null;
+
+                              }
+                            },
 
                             controller: _email,
                           ),
@@ -183,6 +206,15 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius: BorderRadius.circular(20)),
 
                             ),
+                            validator: (val){
+                              if(val!.isEmpty){
+                                return "Required";
+                              }
+                              else{
+                                return null;
+
+                              }
+                            },
 
                             onTap: () async {
                               DateTime? pickdate = await showDatePicker(
@@ -288,8 +320,7 @@ class _HomePageState extends State<HomePage> {
                                       .width * 0.8, 40), //////// HERE
                                 ),
                                 onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/detail');
+                                  validate();
                                 },
                                 child: Text('Submit'),
                               )
