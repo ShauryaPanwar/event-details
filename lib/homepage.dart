@@ -1,18 +1,20 @@
 import 'dart:io';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:event_details/utils/spaces.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'formatter/uppercase.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 
 class HomePage extends StatefulWidget {
@@ -25,6 +27,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isFile = false;
 
+  String qrCode = 'Uknown';
   XFile? fileimage;
   final ImagePicker imagePicker = ImagePicker();
 
@@ -46,54 +49,52 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _aoi = TextEditingController();
 
 
-  final items=[
-  'Event Manager',
-  "Event Scheduling",
-  "Product Manager",
-  "Data Analyst",
-  "Web Developer",
-  "Flutter Developer",
+  final items = [
+    'Event Manager',
+    "Event Scheduling",
+    "Product Manager",
+    "Data Analyst",
+    "Web Developer",
+    "Flutter Developer",
   ];
 
-  int index =0;
+  int index = 0;
 
 
-  GlobalKey<FormState> formkey =GlobalKey<FormState>();
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  void validate(){
-    if(formkey.currentState!.validate()){
+  void validate() {
+    if (formkey.currentState!.validate()) {
       print("ok");
-      _qrscanner();
       // Navigator.pushReplacementNamed(context, '/detail');
+      scanQrCode();
     }
-    else{
+    else {
       print('error');
     }
   }
+  // late final String code;
 
-  Future _qrscanner() async {
-    var camerastatus = await Permission.camera.status;
-    if(camerastatus.isGranted){
-      String? qrdata = await scanner.scan();
-      // String? qrdataphone = await scanner.scanPhoto();
-      print(qrdata);
-      // print(qrdataphone);
-    }
-    else{
-      var isgrant = await Permission.camera.request();
-      if(isgrant.isGranted){
-        String? qrdata = await scanner.scan();
-        // String? qrdataphone = await scanner.scanPhoto();
-        print(qrdata);
-        // print(qrdataphone);
-      }
+  Future<void> scanQrCode() async {
+    try {
+      final qrcode = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+      if (!mounted) return;
+
+      setState(() {
+        this.qrCode = qrCode;
+      });
+      launchUrlString(qrcode);
+
+    } on PlatformException{
+      qrCode='Failed to get version';
     }
 
   }
 
+
   @override
   Widget build(BuildContext context) {
-
     var isdark = MediaQuery
         .of(context)
         .platformBrightness == Brightness.dark;
@@ -185,13 +186,12 @@ class _HomePageState extends State<HomePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20)),
                             ),
-                            validator: (val){
-                              if(val!.isEmpty){
+                            validator: (val) {
+                              if (val!.isEmpty) {
                                 return "Required";
                               }
-                              else{
+                              else {
                                 return null;
-
                               }
                             },
 
@@ -229,13 +229,12 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius: BorderRadius.circular(20)),
 
                             ),
-                            validator: (val){
-                              if(val!.isEmpty){
+                            validator: (val) {
+                              if (val!.isEmpty) {
                                 return "Required";
                               }
-                              else{
+                              else {
                                 return null;
-
                               }
                             },
 
@@ -297,32 +296,32 @@ class _HomePageState extends State<HomePage> {
                               FocusScope.of(context).requestFocus(
                                   new FocusNode());
                               showCupertinoModalPopup(
-                                  context: context, builder: (context){
-                                    return Container(
-                                      height: 200,
-                                      color: Colors.white,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                              child: CupertinoPicker(
-                                                itemExtent: 90,
-                                                onSelectedItemChanged: (index){
-                                                  setState(() {
-                                                    this.index = index;
-                                                    _aoi.text=items[index];
-                                                  });
-                                                },
-                                                children: items.map((item) =>
-                                                    Center(child: Text(item,
-                                                    style: TextStyle(fontSize: 30),),)
-                                                ).toList(),
-                                              )
+                                  context: context, builder: (context) {
+                                return Container(
+                                  height: 200,
+                                  color: Colors.white,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 3,
+                                          child: CupertinoPicker(
+                                            itemExtent: 90,
+                                            onSelectedItemChanged: (index) {
+                                              setState(() {
+                                                this.index = index;
+                                                _aoi.text = items[index];
+                                              });
+                                            },
+                                            children: items.map((item) =>
+                                                Center(child: Text(item,
+                                                  style: TextStyle(
+                                                      fontSize: 30),),)
+                                            ).toList(),
                                           )
-                                        ],
-                                      ),
-                                    );
-
+                                      )
+                                    ],
+                                  ),
+                                );
                               });
                             },
                           ),
