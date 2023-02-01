@@ -84,7 +84,16 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         this.qrCode = qrCode;
       });
+
       launchUrlString(qrcode);
+
+
+      // if(await canLaunchUrlString(qrcode)) {
+      //   await launchUrlString(qrcode);
+      // }
+      // else{
+      //   Flushbar();
+      // }
 
     } on PlatformException{
       qrCode='Failed to get version';
