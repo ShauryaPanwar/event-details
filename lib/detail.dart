@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:event_details/utils/spaces.dart';
+import 'package:event_details/widgets/cardwithoutimage.dart';
 import 'package:event_details/widgets/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -24,7 +25,6 @@ class _detailState extends State<detail> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height * 1,
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/dices.jpeg'), fit: BoxFit.cover)),
@@ -46,56 +46,13 @@ class _detailState extends State<detail> {
                     // cursorColor: Colors.lightBlueAccent,
                   ),
                   verticalspacing(11),
-                  CardEvent(Date: "14 Feb", event_name: " Party Event", image: AssetImage('assets/drinks.png')),
+                  CardEvent(Date: "14 Feb", event_name: " Party Event", image: AssetImage('assets/drinksblur.png')),
                   verticalspacing(11),
-                  CardEvent(Date: "23 May", event_name: "Birthday Event", image: AssetImage('assets/Party.png')),
+                  Cardnoimg(),
                   verticalspacing(11),
-                  Card(
-                    color: Colors.black12,
-                    clipBehavior: Clip.antiAlias,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.256,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Colors.black.withOpacity(0.40), Colors.black.withOpacity(0.2),Colors.grey.withOpacity(0.01)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
-                            borderRadius: BorderRadius.circular(5.0)),
-                        child: Material(
-                          child: InkWell(
-                            onTap: (){},
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("18 March",
-                                      style: GoogleFonts.lato(
-                                          color: Colors.white, fontSize: 50)),
-                                  Text('Social Work',
-                                      style: GoogleFonts.lato(
-                                          color: Colors.white, fontSize: 20)),
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: Center(
-                                        child: Text(
-                                          'Join Event',
-                                          style: TextStyle(color: Colors.white.withOpacity(0.8)),
-                                        ),
-                                      )
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
-                  )
+                  CardEvent(Date: "23 May", event_name: "Birthday Event", image: AssetImage('assets/PartyBlur.png')),
+                  verticalspacing(11),
+                  Cardnoimg(),
                 ]
             ),
           ),

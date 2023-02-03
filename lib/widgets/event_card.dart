@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:blur/blur.dart';
 
 class CardEvent extends StatelessWidget {
   final String Date;
@@ -34,7 +35,8 @@ class CardEvent extends StatelessWidget {
               image: DecorationImage(
                   colorFilter: ColorFilter.mode(Colors.grey, BlendMode.saturation),
                   fit: BoxFit.cover,
-                  image: image)),
+                  image: image)
+          ),
           child: Material(
             child: InkWell(
               onTap: (){},
