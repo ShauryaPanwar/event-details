@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:event_details/utils/spaces.dart';
 import 'package:event_details/widgets/cardwithoutimage.dart';
 import 'package:event_details/widgets/event_card.dart';
@@ -22,6 +21,14 @@ class _detailState extends State<detail> {
     return SafeArea(
       bottom: false,
       child: Scaffold(
+        floatingActionButton:FloatingActionButton( //Floating action button on Scaffold
+          onPressed: (){
+            //code to execute on button press
+          },
+          child: Icon(Icons.add), //icon inside button
+        ),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
@@ -53,56 +60,58 @@ class _detailState extends State<detail> {
                   CardEvent(Date: "23 May", event_name: "Birthday Event", image: AssetImage('assets/PartyBlur.png')),
                   verticalspacing(11),
                   Cardnoimg(),
+                  verticalspacing(11),
+                  CardEvent(Date: "03 Jan", event_name: "Working Hours", image: AssetImage('assets/cupblur.png'))
                 ]
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          )),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20),
-            ),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              elevation: 9,
-              currentIndex: _selectedindex,
-              backgroundColor: Colors.deepPurple,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.white.withOpacity(.60),
-              selectedFontSize: 16,
-              unselectedFontSize: 14,
-              onTap: (value) {
-                setState(() {
-                  _selectedindex = value;
-                });
-              },
-              items: [
-                BottomNavigationBarItem(
-                  label: 'Favourites',
-                  icon: Icon(Icons.favorite),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Music',
-                  icon: Icon(Icons.music_note),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Places',
-                  icon: Icon(Icons.location_on),
-                ),
-                BottomNavigationBarItem(
-                  label: 'News',
-                  icon: Icon(Icons.library_books),
-                ),
-              ],
+        bottomNavigationBar: BottomAppBar( //bottom navigation bar on scaffold
+          color:Colors.deepPurple,
+          shape: CircularNotchedRectangle(), //shape of notch
+          notchMargin: 3, //notche margin between floating button and bottom appbar
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                )),
+            child: ClipRRect(
+              clipBehavior: Clip.antiAlias,
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(20),
+                topLeft: Radius.circular(20),
+              ),
+
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.shifting,
+                elevation: 9,
+                currentIndex: _selectedindex,
+                backgroundColor: Colors.deepPurple,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white.withOpacity(.60),
+                selectedFontSize: 16,
+                unselectedFontSize: 14,
+                onTap: (value) {
+                  setState(() {
+                    _selectedindex = value;
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    label: 'Favourites',
+                    icon: Icon(Icons.favorite),
+                  ),
+                  BottomNavigationBarItem(
+                    label: 'News',
+                    icon: Icon(Icons.newspaper),
+                  ),
+                ],
+              )
             ),
           ),
         ),
+        
       ),
     );
   }

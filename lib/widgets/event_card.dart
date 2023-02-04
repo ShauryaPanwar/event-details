@@ -39,7 +39,10 @@ class CardEvent extends StatelessWidget {
           ),
           child: Material(
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.pushNamed(context, '/event');
+
+              },
               child: Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: Column(

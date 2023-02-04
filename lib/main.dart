@@ -1,3 +1,4 @@
+import 'package:event_details/Event-info.dart';
 import 'package:event_details/detail.dart';
 import 'package:event_details/homepage.dart';
 import 'package:event_details/login_page.dart';
@@ -24,12 +25,12 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white
         ),
-
       ),
-      home: detail(),
+      home: LoginPage(),
       routes: {
         '/homepage':(context)=> HomePage(),
         '/detail':(context)=> detail(),
+        '/event':(context)=>EventInfo()
 
       },
 

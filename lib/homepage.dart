@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
   void validate() {
     if (formkey.currentState!.validate()) {
       print("ok");
-      Navigator.pushReplacementNamed(context, '/detail');
+      Navigator.pushNamed(context, '/detail');
     } else {
       print('error');
     }
@@ -82,7 +82,22 @@ class _HomePageState extends State<HomePage> {
         this.qrCode = qrCode;
       });
 
-      launchUrlString(qrcode);
+      String url = qrcode;
+      var urllaunchable = await canLaunchUrlString(url);
+      Uri myUri = Uri.parse(url);
+
+
+      if(urllaunchable)
+      {
+        await launchUrl(myUri);
+        LaunchMode.externalApplication;//canLaunch is from url_launcher package
+      }
+      else
+      {
+        LaunchMode.externalApplication;//canLaunch is from url_launcher package
+        launchUrl(myUri);
+      }
+
 
       // if(await canLaunchUrlString(qrcode)) {
       //   await launchUrlString(qrcode);

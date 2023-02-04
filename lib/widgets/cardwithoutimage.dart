@@ -26,7 +26,10 @@ class Cardnoimg extends StatelessWidget {
               borderRadius: BorderRadius.circular(5.0)),
           child: Material(
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.pushNamed(context, '/event');
+
+              },
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
